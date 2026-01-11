@@ -2,26 +2,23 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 const createButton = document.querySelector('.create-button');
-
-const inputFulfilled = document.querySelector('.input-fulfilled');
-const inputRejected = document.querySelector('.input-rejected');
 const inputDelay = document.querySelector('.delay');
 
 createButton.addEventListener ('click',(event)=>{
     event.preventDefault();
-    const msQuantity = Number(document.querySelector('.delay').value);
-    const userChoice = inputFulfilled.checked;
+    const selectedRadioBut = document.querySelector('input[name="state"]:checked');
+
+    const msQuantity = Number(inputDelay.value);
     const promise = new Promise ((resolve, reject) => {
         setTimeout(() => {
-    if (userChoice) {
+    if (selectedRadioBut.value === 'fulfilled') {
         resolve(msQuantity);}
     else {reject(msQuantity);}
     }, msQuantity);
     });
 
 inputDelay.value = '';
-inputFulfilled.checked = false;
-if (inputRejected)inputRejected.checked = false;
+selectedRadioBut.checked = false;
 
 promise
   .then(delay => {iziToast.success({
@@ -37,6 +34,3 @@ promise
                 timeout: '2000',});
     });
 });
-
-
-
